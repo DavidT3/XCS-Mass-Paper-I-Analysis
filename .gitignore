@@ -3,5 +3,6 @@ xga_output
 *.dat
 sdss_prep.ipynb
 locuss_prep.ipynb
+lovisari_prep.ipynb
 *prelim_*
 .ipynb_checkpoints
