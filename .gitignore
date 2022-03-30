@@ -1,5 +1,6 @@
 *.fits
-xga_output
+*xga_output
+
 *.dat
 sdss_prep.ipynb
 locuss_prep.ipynb
