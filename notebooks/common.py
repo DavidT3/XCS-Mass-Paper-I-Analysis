@@ -1,5 +1,5 @@
 from astropy.cosmology import LambdaCDM, WMAP9
-from astropy.units import Quantity
+from astropy.units import Quantity, UnitConversionError
 import pandas as pd
 import numpy as np
 from typing import Union, List
