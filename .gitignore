@@ -1,6 +1,5 @@
 *.fits
 *xga_output
-
 *.dat
 sdss_prep.ipynb
 locuss_prep.ipynb
@@ -13,3 +12,4 @@ locuss_coords_wtf.ipynb
 checking_for_flaring.ipynb
 .DS_Store
 mekal_devtest.ipynb
+__pycache__
