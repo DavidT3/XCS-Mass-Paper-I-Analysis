@@ -14,8 +14,8 @@ locuss_cosmo = LambdaCDM(70, 0.3, 0.7)
 lovisari_cosmo = LambdaCDM(70, 0.3, 0.7)
 
 xcs3p_colour = 'tab:cyan'
-xxlgc100_colour = 'black'
-locuss_colour = 'indigo'
+xxlgc100_colour = 'firebrick'
+locuss_colour = 'black'
 
 
 # This function is used for getting axis limits for the the one to one comparison plots later
