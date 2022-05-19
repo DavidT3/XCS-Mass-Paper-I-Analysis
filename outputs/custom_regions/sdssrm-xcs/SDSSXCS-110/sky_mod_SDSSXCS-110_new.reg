@@ -1,0 +1,3 @@
+# Region file format: DS9 astropy/regions
+fk5
+ellipse(336.472283,17.168091,0.018125,0.013292,29.990251) # color=white
