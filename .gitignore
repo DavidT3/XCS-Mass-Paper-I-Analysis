@@ -15,5 +15,5 @@ mekal_devtest.ipynb
 __pycache__
 to_remove.ipynb
 to_remove.py
-testo.reg
+testo_*.reg
 process_custom_regions.ipynb
