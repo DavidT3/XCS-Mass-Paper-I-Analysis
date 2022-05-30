@@ -62,3 +62,4 @@ Paul Giles did all of this inspecting. Any ObsID without a note is definitely fl
 * 0762871001
 * 0827350401
 * 0677680132
+* 0821871301 - this one is technically ok, but very close to edge of fov
