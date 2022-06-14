@@ -63,3 +63,20 @@ Paul Giles did all of this inspecting. Any ObsID without a note is definitely fl
 * 0827350401
 * 0677680132
 * 0821871301 - this one is technically ok, but very close to edge of fov
+
+## Follow-up flare checking
+Here we re-examined certain observations, paying more attention to individual instruments.
+
+* 0605000901 pn
+* 0093030301 pn - residual flaring
+* 0142860201 pn - residual flaring
+* 0743950401 pn - residual flaring?
+* 0743950301 *
+* 0743950501 pn - residual flaring
+* 0743950601 pn - residual flaring
+* 0743950701 pn - residual flaring?
+* 0743950201 * - residual flaring
+* 0743950101 pn
+* 0671540601 pn - residual flaring
+* 0651770101 * - residual flaring
+* 0677840134 pn
