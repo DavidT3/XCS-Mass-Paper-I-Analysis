@@ -19,7 +19,6 @@ Paul Giles did all of this inspecting. Any ObsID without a note is definitely fl
 * 0604873431
 * 0203220101 - classic merging cluster A1758
 * 0723161601
-* 0760740101
 * 0677700138
 * 0653810601 - some residual flaring
 * 0093031601 - all sorts of weirdness
@@ -36,7 +35,6 @@ Paul Giles did all of this inspecting. Any ObsID without a note is definitely fl
 * 0650382201 - some residual flaring
 * 0677820131 - mysterious hole in observation (maybe pileup)
 * 0554560901
-* 0761590601
 * 0403760101
 * 0652460101
 * 0677681240
