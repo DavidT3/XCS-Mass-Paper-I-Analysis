@@ -122,8 +122,11 @@ def direct_comparison_plot(xdat: Union[Quantity, List[Quantity]], ydat: Union[Qu
         cur_x = xdat[ax_ind]
         cur_y = ydat[ax_ind]
         cur_name = samp_names[ax_ind]
-        plt.errorbar(cur_x[:, 0].value, cur_y[:, 0].value, xerr=cur_x[:, 1:].T.value, 
-                     yerr=cur_y[:, 1:].T.value, fmt="kx", capsize=2, label=cur_name)
+        if cur_x.ndim == 1:
+            plt.plot(cur_x, cur_y, 'x', color='k', label=cur_name)
+        else:
+            plt.errorbar(cur_x[:, 0].value, cur_y[:, 0].value, xerr=cur_x[:, 1:].T.value, 
+                         yerr=cur_y[:, 1:].T.value, fmt="kx", capsize=2, label=cur_name)
         
         # Setting axis limits
         plt.xlim(lims)
