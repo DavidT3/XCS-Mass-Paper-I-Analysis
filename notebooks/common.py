@@ -25,13 +25,17 @@ def find_lims(x_dat, y_dat, buffer=0.1):
     lom = 1 - buffer
     him = 1 + buffer
     
-    # Reading out the values without errors
-    x_vals = x_dat[:, 0]
-    y_vals = y_dat[:, 0]
+    # Reading out the values without errors - slicing with ..., None to ensure nothing goes wrong if there
+    #  are no error columns
+    x_vals = x_dat[..., None][:, 0]
+    y_vals = y_dat[..., None][:, 0]
     
-    # Depending on whether the input data has + and - errors, or just a standard deviation, depends how
-    #  we find maximum and minimum values
-    if x_dat.shape[1] == 3:
+    # Depending on whether the input data has + and - errors, just a standard deviation, or no errors at all - this 
+    #  alters how we find the limits
+    # Using ndim is the way I should have done the other statements, but I can't be bothered to change it now
+    if x_dat.ndim == 1:
+        x_lims = [np.nanmin(x_vals[np.where(x_vals>0)[0]]), np.nanmax(x_vals)]
+    elif x_dat.shape[1] == 3:
         # In this case upper and lower errors are present
         lb = x_vals-x_dat[:, 1]
         # Make sure that we don't count any NaN values, and don't count any negative values
@@ -42,8 +46,10 @@ def find_lims(x_dat, y_dat, buffer=0.1):
         # The behaviour is largely the same as above, but for symmetrical errors
         lb = x_vals-x_dat[:, 1]
         x_lims = [np.nanmin(lb[np.where(lb>0)[0]]), np.nanmax(x_vals+x_dat[:, 1])]
-    
-    if y_dat.shape[1] == 3:
+       
+    if y_dat.ndim == 1:
+        y_lims = [np.nanmin(y_vals[np.where(y_vals>0)[0]]), np.nanmax(y_vals)]
+    elif y_dat.shape[1] == 3:
         lb = y_vals-y_dat[:, 1]
         y_lims = [np.nanmin(lb[np.where(lb>0)[0]]), np.nanmax(y_vals+y_dat[:, 2])]
     elif y_dat.shape[1] == 2:
