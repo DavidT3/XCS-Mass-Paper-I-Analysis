@@ -24,37 +24,32 @@ def find_lims(x_dat, y_dat, buffer=0.1):
     #  more easily readable
     lom = 1 - buffer
     him = 1 + buffer
-    
-    # Reading out the values without errors - slicing with ..., None to ensure nothing goes wrong if there
-    #  are no error columns
-    x_vals = x_dat[..., None][:, 0]
-    y_vals = y_dat[..., None][:, 0]
-    
+   
     # Depending on whether the input data has + and - errors, just a standard deviation, or no errors at all - this 
     #  alters how we find the limits
     # Using ndim is the way I should have done the other statements, but I can't be bothered to change it now
     if x_dat.ndim == 1:
-        x_lims = [np.nanmin(x_vals[np.where(x_vals>0)[0]]), np.nanmax(x_vals)]
+        x_lims = [np.nanmin(x_dat[np.where(x_dat > 0)[0]]), np.nanmax(x_dat)]
+    elif x_dat.shape[1] == 2:
+        # The behaviour is largely the same as above, but for symmetrical errors
+        lb = x_dat[:, 0] - x_dat[:, 1]
+        x_lims = [np.nanmin(lb[np.where(lb > 0)[0]]), np.nanmax(x_dat[:, 0] + x_dat[:, 1])]
     elif x_dat.shape[1] == 3:
         # In this case upper and lower errors are present
-        lb = x_vals-x_dat[:, 1]
+        lb = x_dat[:, 0] - x_dat[:, 1]
         # Make sure that we don't count any NaN values, and don't count any negative values
         #  The lower errors are subtracted from the measurements, and upper values added to them
         #  Then max and mins are found 
-        x_lims = [np.nanmin(lb[np.where(lb>0)[0]]), np.nanmax(x_vals+x_dat[:, 2])]
-    elif x_dat.shape[1] == 2:
-        # The behaviour is largely the same as above, but for symmetrical errors
-        lb = x_vals-x_dat[:, 1]
-        x_lims = [np.nanmin(lb[np.where(lb>0)[0]]), np.nanmax(x_vals+x_dat[:, 1])]
-       
+        x_lims = [np.nanmin(lb[np.where(lb > 0)[0]]), np.nanmax(x_dat[:, 0] + x_dat[:, 2])]
+
     if y_dat.ndim == 1:
-        y_lims = [np.nanmin(y_vals[np.where(y_vals>0)[0]]), np.nanmax(y_vals)]
+        y_lims = [np.nanmin(y_dat[np.where(y_dat > 0)[0]]), np.nanmax(y_dat)]
     elif y_dat.shape[1] == 3:
-        lb = y_vals-y_dat[:, 1]
-        y_lims = [np.nanmin(lb[np.where(lb>0)[0]]), np.nanmax(y_vals+y_dat[:, 2])]
+        lb = y_dat[:, 0] - y_dat[:, 1]
+        y_lims = [np.nanmin(lb[np.where(lb > 0)[0]]), np.nanmax(y_dat[:, 0] + y_dat[:, 2])]
     elif y_dat.shape[1] == 2:
-        lb = y_vals-y_dat[:, 1]
-        y_lims = [np.nanmin(lb[np.where(lb>0)[0]]), np.nanmax(y_vals+y_dat[:, 1])]
+        lb = y_dat[:, 0] - y_dat[:, 1]
+        y_lims = [np.nanmin(lb[np.where(lb > 0)[0]]), np.nanmax(y_dat[:, 0] + y_dat[:, 1])]
     
     # Then find the minimum and maximum values from the min and max x and y data, and multiply by the buffer
     lims = Quantity([lom*min([x_lims[0], y_lims[0]]), him*max([x_lims[1], y_lims[1]])])
@@ -65,7 +60,8 @@ def find_lims(x_dat, y_dat, buffer=0.1):
 
 def direct_comparison_plot(xdat: Union[Quantity, List[Quantity]], ydat: Union[Quantity, List[Quantity]], xlabs, ylabs,
                            samp_names, figsize, xscale: Union[str, list] = 'log', yscale: Union[str, list] = 'log', 
-                           buffer=0.1, sublabel_fsize=14, savepath=None):
+                           buffer=0.1, sublabel_fsize=14, savepath=None, low_lim: Quantity = None, 
+                           upp_lim: Quantity = None):
     
     if len(xdat) != len(ydat):
         raise ValueError("The input data are not the same length")
@@ -113,7 +109,13 @@ def direct_comparison_plot(xdat: Union[Quantity, List[Quantity]], ydat: Union[Qu
         # Setting the leftmost axis to be current
         plt.sca(ax)
         # Using the function we defined earlier to find appropriate axis limits
-        lims = find_lims(xdat[ax_ind], ydat[ax_ind], buffer=buffer).value
+        lims = find_lims(xdat[ax_ind], ydat[ax_ind], buffer=buffer)
+        if low_lim is not None:
+            lims[0] = low_lim
+        if upp_lim is not None:
+            lims[1] = upp_lim
+        
+        lims = lims.value
 
         # Also using the limits to set up a one to one line
         # Then plotting the temperature comparison points
