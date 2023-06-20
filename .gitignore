@@ -26,3 +26,4 @@ prelim_masses.csv
 thesis_sdss_meas.csv
 dev*.ipynb
 radius_errors*.csv
+core*
